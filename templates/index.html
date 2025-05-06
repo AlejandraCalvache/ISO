@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Asistente Virtual - ISO 27001</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #e6f2f2;
+            padding: 2rem;
+        }
+        h2 {
+            text-align: center;
+            color: #003333;
+        }
+        .container {
+            max-width: 90%;
+            margin: auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+        }
+        .columns {
+            display: flex;
+            flex-direction: row;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+        .column {
+            flex: 1;
+            min-width: 300px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            padding: 10px;
+            font-size: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        .label {
+            font-weight: bold;
+            margin: 1rem 0 0.5rem;
+            color: #003333;
+        }
+        .btn {
+            background-color: #00796b;
+            color: white;
+            padding: 10px 20px;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin: 0.5rem;
+        }
+        .btn:hover {
+            background-color: #005f56;
+        }
+        .result {
+            font-size: 1.2rem;
+            color: green;
+            margin-top: 1rem;
+            text-align: center;
+        }
+        .caso-box {
+            background-color: #f0fafa;
+            padding: 1rem;
+            border-left: 4px solid #00796b;
+            margin-bottom: 2rem;
+            border-radius: 5px;
+        }
+        .button-row {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Asistente Virtual - ISO 27001</h2>
+
+        <div class="caso-box">
+            <p><strong>Caso de Estudio:</strong></p>
+            <p>{{ caso }}</p>
+        </div>
+
+        <form method="POST">
+            <div class="columns">
+                <div class="column">
+                    <div class="label">Tu Solución:</div>
+                    <textarea name="user_solution">{{ user_solution }}</textarea>
+                </div>
+                <div class="column">
+                    <div class="label">Solución de la IA:</div>
+                    <textarea readonly>{{ ia_solution }}</textarea>
+                </div>
+            </div>
+
+            <div class="button-row">
+                <button class="btn" type="submit" name="action" value="comparar">Comparar</button>
+                <button class="btn" type="submit" name="action" value="nuevo_caso">Generar Nuevo Caso</button>
+                <button class="btn" type="submit" name="action" value="descargar_pdf">Descargar en PDF</button>
+            </div>
+        </form>
+
+        {% if resultado is not none %}
+            <div class="result">
+                Porcentaje de similitud: {{ resultado }}%
+            </div>
+        {% endif %}
+    </div>
+</body>
+</html>
