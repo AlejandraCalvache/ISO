@@ -6,6 +6,7 @@ from xhtml2pdf import pisa
 
 app = Flask(__name__)
 
+# Generar caso de estudio con IA
 def generar_caso_estudio():
     prompt = (
         "Genera un caso de estudio realista sobre el incumplimiento de la norma ISO/IEC 27001 por parte de una empresa ficticia. "
@@ -17,15 +18,18 @@ def generar_caso_estudio():
     respuesta = ollama.chat(model='tinyllama', messages=[{'role': 'user', 'content': prompt}])
     return respuesta['message']['content']
 
+# Obtener solución de IA para el caso
 def obtener_solucion_ia(caso):
-    prompt = f"Dada esta situación relacionada con la norma ISO 27001, proporciona una solución detallada sobre como debería ser la solución a este incumplimiento dado"
+    prompt = f"Dada esta situación relacionada con la norma ISO 27001, proporciona una solución detallada sobre cómo debería ser la solución a este incumplimiento dado:\n\n{caso}"
     respuesta = ollama.chat(model='tinyllama', messages=[{'role': 'user', 'content': prompt}])
     return respuesta['message']['content']
 
+# Comparar soluciones
 def comparar_soluciones(user_text, ia_text):
     ratio = SequenceMatcher(None, user_text.lower(), ia_text.lower()).ratio()
     return round(ratio * 100, 2)
 
+# Generar PDF desde HTML
 def generar_pdf(html):
     result = BytesIO()
     pisa_status = pisa.CreatePDF(html, dest=result)
@@ -34,6 +38,7 @@ def generar_pdf(html):
     result.seek(0)
     return result
 
+# Almacenar caso generado
 caso_actual = generar_caso_estudio()
 
 @app.route("/", methods=["GET", "POST"])
