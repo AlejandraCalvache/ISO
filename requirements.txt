@@ -1,4 +1,3 @@
 Flask
 ollama
-difflib
 xhtml2pdf
